@@ -36,7 +36,7 @@ units_table = [   (1e-9, u'ps', 1e12),
 
 def get_time_units_and_multiplier(seconds):
     """
-    Given a time in seconds, determines the best units and multiplier to
+    Given a duration in seconds, determines the best units and multiplier to
     use to display the time. Return value is a 2-tuple of units and multiplier.
     """
     for cutoff, units, multiplier in units_table:
@@ -45,7 +45,7 @@ def get_time_units_and_multiplier(seconds):
     return units, multiplier
 
 def format_duration(seconds):
-    """Formats a number of seconds with the best units."""
+    """Formats a number of seconds using the best units."""
     units, divider = get_time_units_and_multiplier(seconds)
     seconds *= divider
     return "%.3f %s" % (seconds, units)
@@ -103,8 +103,8 @@ class ElapsedTimer(object):
         if enable and self._enable:
             displayDelta = format_duration(self._delta)
             if len(self._task):
-                msg = "%s: %s" % (displayDelta, self._task)
+                msg = "%s: %s\n" % (displayDelta, self._task)
             else:
-                msg = displayDelta
+                msg = displayDelta + '\n'
             self._file.write(msg)
 
