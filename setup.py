@@ -1,14 +1,16 @@
-from distutils.core import setup
+from setuptools import setup
+from codecs import open
+from os import path
 
-long_description = """
-Elapsed timer and utilities
+here = path.abspath(path.dirname(__file__))
 
-Requires Python 2.7 or newer.
-"""
+# Get the long description from the relevant file
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
         name="elapsedtimer",
-        version="0.1",
+        version="0.2",
         description="Elapsed timer and utilities",
         long_description=long_description,
         author="Chris Reed",
@@ -18,11 +20,12 @@ setup(
         py_modules = ["elapsedtimer"],
         classifiers = [
             "Intended Audience :: Developers",
-            "License :: OSI Approved :: BSD 3-Clause License",
+            "License :: OSI Approved :: BSD License",
             "Development Status :: 4 - Beta",
             "Programming Language :: Python",
             "Operating System :: OS Independent",
             "Topic :: Other/Nonlisted Topic",
             "Topic :: Software Development :: Libraries",
+            "Topic :: Software Development :: Libraries :: Python Modules",
         ]
     )

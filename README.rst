@@ -15,9 +15,16 @@ Basic example:
     hi there!
     13.113 µs: say hello
 
+ElapsedTimer
+------------
+
 The constructor for ``ElapsedTimer`` takes an optional string describing the operation being
 performed. It also optionally accepts a file object to change where the resulting duration
 message will be printed. The output file defaults to sys.stdout.
+
+The constructor can also take a logger instance and log level via the optional ``logger`` and
+``loglevel`` keyword parameters. If a logger is provided, it takes precedence over a file object
+and the duration message will be output via the logger. The log level defaults to ``DEBUG``.
 
 You can control an ``ElapsedTimer`` instance directly instead of using it as a context manager.
 It has ``start()`` and ``stop()`` methods. The ``stop()`` method will not print the duration for
@@ -28,18 +35,26 @@ context manager entered. A ``timedelta`` property is also available that returns
 time as a datetime.timedelta object instead of a float, though note that this class this only has
 microsecond resolution.
 
-In addition to ``ElapsedTimer``, there are some utilities. The ``format_duration()`` function
-takes a duration in seconds and returns a string with the most human-readable duration and time
-units. The units are selected such that there will be between 1 and 3 digits before the decimal
-point.
-
 There is a module-level ``enable`` variable that acts as a global enable switch for all printing
 of results by ``ElapsedTimer``. It defaults to True.
+
+Timeout
+-------
+
+Another class in the module is ``Timeout``. It adds a few methods to make it easy to check for
+timeouts. You can use this class as a context manager. The constructor takes the same parameters
+as for ``ElapsedTimer``, except for a new first param of the timeout in seconds.
+
+There are two methods to check the timeout, ``check()`` and ``check_and_raise()``. The former
+compares the elapsed time against the timeout and returned True if a timeout occurred. The latter
+will raise ``TimeoutError`` if a timeout happens. You can use the ``timed_out`` property to
+as another way to check, equivalent to calling ``check()``.
+
 
 License
 -------
 
 This package is licensed under the BSD three-clause license. See the LICENSE file for details.
 
-Copyright © 2014 Chris Reed.
+Copyright © 2014-2015 Chris Reed.
 
