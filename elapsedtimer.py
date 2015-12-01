@@ -29,10 +29,18 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from __future__ import print_function
-import time
 import datetime
 import sys
 import logging
+try:
+    from time import monotonic as hires_clock
+except ImportError:
+    import time
+    # Select which clock routine is highest resolution for this OS.
+    if sys.platform == 'win32':
+        hires_clock = time.clock
+    else:
+        hires_clock = time.time
 
 __all__ = ['ElapsedTimer', 'Timeout', 'TimeoutError']
 
@@ -40,12 +48,6 @@ __version__ = 0.2
 
 # Global enable for printing timer results.
 enable = True
-
-# Select which clock routine is highest resolution for this OS.
-if sys.platform == 'win32':
-    hires_clock = time.clock
-else:
-    hires_clock = time.time
 
 ## Table of time units.
 #

@@ -33,9 +33,10 @@ from elapsedtimer import *
 import pytest
 import time
 import datetime
+from sys import platform, version_info
 
 def within(x, y, r):
-    print "within(%f, %f, %f)" % (x, y, r)
+    print("within(%f, %f, %f)" % (x, y, r))
     return abs(x - y) < r
 
 def calibrate():
@@ -49,8 +50,25 @@ timePer1000 = calibrate()
 
 def count_for_time(e):
     x = 1000 * e / timePer1000
-    print "count_for_time(%g) = %g" % (e,x)
+    print("count_for_time(%g) = %g" % (e,x))
     return int(x)
+
+@pytest.mark.skipif(version_info < (3,3), reason='Requires python >= 3.3')
+def test_module_uses_monotonic_as_timer():
+    '''Assert that time.monotonic is used.'''
+    assert elapsedtimer.hires_clock == time.monotonic
+
+@pytest.mark.skipif(version_info > (3,2), reason='Using python >= 3.3')
+@pytest.mark.skipif(platform == 'win32', reason='Requires other platform than windows.')
+def test_module_uses_time_as_timer():
+    '''Assert that time.time is used (on non windows platforms) when time.monotonic is not available.'''
+    assert elapsedtimer.hires_clock == time.time
+
+@pytest.mark.skipif(version_info > (3,2), reason='Using python >= 3.3')
+@pytest.mark.skipif(platform != 'win32', reason='Requires windows platform.')
+def test_module_uses_clock_as_timer():
+    '''Assert that time.time is used when time.monotonic is not available.'''
+    assert elapsedtimer.hires_clock == time.clock
 
 class TestElapsedTimer:
     def test_start_stop(self):
