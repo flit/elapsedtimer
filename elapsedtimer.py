@@ -36,7 +36,7 @@ import logging
 
 __all__ = ['ElapsedTimer', 'Timeout', 'TimeoutError']
 
-__version__ = 0.2
+__version__ = 0.3
 
 # Global enable for printing timer results.
 enable = True
@@ -141,10 +141,13 @@ class ElapsedTimer(object):
         if enable and self._enable:
             displayDelta = format_duration(self._delta)
             if len(self._task):
-                msg = "%s: %s\n" % (displayDelta, self._task)
+                msg = "%s: %s" % (displayDelta, self._task)
             else:
-                msg = displayDelta + '\n'
+                msg = displayDelta
+            if not self._logger:
+                msg += '\n'
             if self._logger:
+
                 self._logger.log(self._loglevel, msg)
             else:
                 self._file.write(msg)
