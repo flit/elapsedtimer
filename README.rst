@@ -1,6 +1,9 @@
 elapsedtimer
 ============
 
+.. image:: https://travis-ci.org/flit/elapsedtimer.svg?branch=master
+    :target: https://travis-ci.org/flit/elapsedtimer
+
 Python elapsed time utilities.
 
 The main interface to this package is an ``ElapsedTimer`` class. This class will use the highest
