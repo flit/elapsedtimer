@@ -17,8 +17,8 @@ setup(
         author_email="flit@me.com",
         license="BSD 3-Clause",
         url="https://github.com/flit/elapsedtimer",
-        py_modules = ["elapsedtimer"],
-        classifiers = [
+        py_modules=["elapsedtimer"],
+        classifiers=[
             "Intended Audience :: Developers",
             "License :: OSI Approved :: BSD License",
             "Development Status :: 4 - Beta",
