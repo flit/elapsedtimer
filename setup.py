@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
         name="elapsedtimer",
-        version="0.3",
+        version="0.4",
         description="Elapsed timer and utilities",
         long_description=long_description,
         author="Chris Reed",

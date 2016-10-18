@@ -56,5 +56,5 @@ License
 
 This package is licensed under the BSD three-clause license. See the LICENSE file for details.
 
-Copyright © 2014-2015 Chris Reed.
+Copyright © 2014-2016 Chris Reed.
 
