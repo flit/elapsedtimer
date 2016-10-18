@@ -18,6 +18,9 @@ setup(
         license="BSD 3-Clause",
         url="https://github.com/flit/elapsedtimer",
         py_modules=["elapsedtimer"],
+        testsrequire=[
+            "pytest==3.0.3",
+        ],
         classifiers=[
             "Intended Audience :: Developers",
             "License :: OSI Approved :: BSD License",
