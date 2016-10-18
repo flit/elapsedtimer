@@ -6,7 +6,8 @@ python:
   - "3.4"
   - "3.5"
 install:
+  # For some strange reason pip fails on pip install -e .[tests]
+  - "pip install pytest==2.9.2"
   - "python setup.py develop"
-  - "pip install -e '.[tests]'"
 script:
   - py.test
