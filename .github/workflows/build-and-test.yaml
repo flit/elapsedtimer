@@ -60,7 +60,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest --junitxml=test-results-${{ matrix.python-version }}.xml --cov=pyocd --cov-report=xml
+        pytest --junitxml=test-results-${{ matrix.python-version }}.xml
 
     - name: Test build
       run: |
