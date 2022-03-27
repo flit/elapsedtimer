@@ -74,31 +74,38 @@ def test_module_uses_clock_as_timer():
     '''Assert that time.time is used when time.monotonic is not available.'''
     assert elapsedtimer.hires_clock == time.clock
 
+def delay_for_a_bit():
+    for i in range(100):
+        time.sleep(0.001)
+
 class TestElapsedTimer:
     def test_start_stop(self):
-        startTime = time.time()
+        start_time = time.time()
         t = ElapsedTimer('foo')
         t.start()
-        for i in range(count_for_time(0.02)): pass
+        delay_for_a_bit()
         t.stop()
+        stop_time = time.time()
 
-        assert within(t.elapsed, time.time() - startTime, 0.01)
+        assert within(t.elapsed, stop_time - start_time, 0.01)
 
     def test_timedelta(self):
-        startTime = time.time()
+        start_time = time.time()
         t = ElapsedTimer('foo')
         t.start()
-        for i in range(count_for_time(0.02)): pass
+        delay_for_a_bit()
         t.stop()
-        d = datetime.timedelta(seconds=(time.time() - startTime))
+        stop_time = time.time()
+        d = datetime.timedelta(seconds=(stop_time - start_time))
 
         assert (t.timedelta - d) < datetime.timedelta(seconds=0.01)
 
     def test_context(self):
-        startTime = time.time()
+        start_time = time.time()
         with ElapsedTimer('foo') as t:
-            for i in range(1000): pass
-        assert within(t.elapsed, time.time() - startTime, 0.01)
+            delay_for_a_bit()
+        stop_time = time.time()
+        assert within(t.elapsed, stop_time - start_time, 0.01)
 
 # class TestTimeout:
 #     def test_check(self):
