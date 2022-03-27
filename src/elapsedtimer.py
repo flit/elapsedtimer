@@ -31,6 +31,7 @@
 import datetime
 import sys
 import logging
+from typing import (List, Tuple)
 
 try:
     from time import monotonic as hires_clock
@@ -47,7 +48,7 @@ __all__ = ['ElapsedTimer', 'Timeout', 'TimeoutError']
 __version__ = '1.0.0'
 
 # Global enable for printing timer results.
-enable = True
+enable: bool = True
 
 ## Table of time units.
 #
@@ -56,16 +57,18 @@ enable = True
 #   than this cutoff.
 # - Unit string.
 # - Multiplier to convert the time value to this entry's units.
-units_table = [   (1e-9, u'ps', 1e12),
-            (1e-6, u'ns', 1e9),
-            (1e-3, u'µs', 1e6),
-            (1.0,  u'ms', 1e3),
-            (60,   u's',  1.0),
-            (60*60, u'min', 1.0/60),
-            (24*60*60, u'hrs', 1.0/(60*60)),
-            (0, u's', 1.0)  ]   # Revert to seconds if very large
+units_table: List[Tuple[int, str, float]] = [
+    (1e-9,      'ps',   1e12),
+    (1e-6,      'ns',   1e9),
+    (1e-3,      'µs',   1e6),
+    (1.0,       'ms',   1e3),
+    (60,        's',    1.0),
+    (60*60,     'min',  1.0/60),
+    (24*60*60,  'hrs',  1.0/(60*60)),
+    (0,         's',    1.0)   # Revert to seconds if very large
+]
 
-def get_time_units_and_multiplier(seconds):
+def get_time_units_and_multiplier(seconds: float) -> Tuple[str, float]:
     """
     Given a duration in seconds, determines the best units and multiplier to
     use to display the time. Return value is a 2-tuple of units and multiplier.
@@ -75,16 +78,15 @@ def get_time_units_and_multiplier(seconds):
             break
     return units, multiplier
 
-def format_duration(seconds):
+def format_duration(seconds: float) -> str:
     """Formats a number of seconds using the best units."""
     units, divider = get_time_units_and_multiplier(seconds)
-    seconds *= divider
-    return "%.3f %s" % (seconds, units)
+    return f"{seconds * divider:.3f} {units}"
 
 class TimeoutError(RuntimeError):
     pass
 
-class ElapsedTimer(object):
+class ElapsedTimer:
     """
     Timer meant to be used in a with statement. Pass the constructor an optional
     string describing the task that is being measured. When the with statement
@@ -109,33 +111,33 @@ class ElapsedTimer(object):
         self.stop()
         self._print_message()
 
-    def start(self):
+    def start(self) -> None:
         self._start = hires_clock()
         self._end = 0
         self._delta = 0
 
-    def stop(self):
+    def stop(self) -> None:
         if self._end == 0:
             self._end = hires_clock()
             self._delta = self._end - self._start
 
     @property
-    def enable(self):
+    def enable(self) -> bool:
         return self._enable
 
     @enable.setter
-    def enable(self, value):
+    def enable(self, value: bool) -> None:
         self._enable = value
 
     @property
-    def elapsed(self):
+    def elapsed(self) -> float:
         if self._end:
             return self._delta
         else:
             return hires_clock() - self._start
 
     @property
-    def timedelta(self):
+    def timedelta(self) -> float:
         return datetime.timedelta(seconds=self.elapsed)
 
     def _print_message(self):
@@ -160,7 +162,7 @@ class Timeout(ElapsedTimer):
         self._timeout = timeout
         self._did_timeout = False
 
-    def check(self):
+    def check(self) -> bool:
         if self._timeout is None:
             return False
         if self._did_timeout:
@@ -168,10 +170,10 @@ class Timeout(ElapsedTimer):
         self._did_timeout = self.elapsed >= self._timeout
         return self._did_timeout
 
-    def check_and_raise(self):
+    def check_and_raise(self) -> None:
         if self.check():
             raise TimeoutError(self._task)
 
     @property
-    def timed_out(self):
+    def timed_out(self) -> bool:
         return self.check()
