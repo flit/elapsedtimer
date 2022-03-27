@@ -28,10 +28,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from __future__ import print_function
 import datetime
 import sys
 import logging
+
 try:
     from time import monotonic as hires_clock
 except ImportError:
@@ -44,7 +44,7 @@ except ImportError:
 
 __all__ = ['ElapsedTimer', 'Timeout', 'TimeoutError']
 
-__version__ = '0.4'
+__version__ = '1.0.0'
 
 # Global enable for printing timer results.
 enable = True
