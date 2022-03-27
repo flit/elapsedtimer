@@ -37,10 +37,10 @@ jobs:
         echo "::set-output name=dir::$(pip cache dir)"
 
     - name: Setup pip cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/dev-requirements.txt', '**/setup.py') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.cfg') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
@@ -60,18 +60,8 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest --junitxml=test-results-${{ matrix.python-version }}.xml
+        pytest
 
     - name: Test build
       run: |
         python -mbuild
-
-    - name: Upload pytest test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: pytest-results-${{ matrix.python-version }}
-        path: |
-          test-results-${{ matrix.python-version }}.xml
-          coverage.xml
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
