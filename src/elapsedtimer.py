@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-# Copyright (c) 2014-2016 Chris Reed
+# Copyright (c) 2014-2022 Chris Reed
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
