@@ -1,34 +1,30 @@
-from setuptools import setup
-from codecs import open
-from os import path
+# Copyright (c) 2014-2022 Chris Reed
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# o Redistributions of source code must retain the above copyright notice, this list
+#   of conditions and the following disclaimer.
+#
+# o Redistributions in binary form must reproduce the above copyright notice, this
+#   list of conditions and the following disclaimer in the documentation and/or
+#   other materials provided with the distribution.
+#
+# o Neither the name of Chris Reed nor the names of contributors may be used to
+#   endorse or promote products derived from this software without specific prior
+#   written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-here = path.abspath(path.dirname(__file__))
+import setuptools
 
-# Get the long description from the relevant file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
-
-setup(
-        name="elapsedtimer",
-        version="0.4",
-        description="Elapsed timer and utilities",
-        long_description=long_description,
-        author="Chris Reed",
-        author_email="flit@me.com",
-        license="BSD 3-Clause",
-        url="https://github.com/flit/elapsedtimer",
-        py_modules=["elapsedtimer"],
-        testsrequire=[
-            "pytest==3.0.3",
-        ],
-        classifiers=[
-            "Intended Audience :: Developers",
-            "License :: OSI Approved :: BSD License",
-            "Development Status :: 4 - Beta",
-            "Programming Language :: Python",
-            "Operating System :: OS Independent",
-            "Topic :: Other/Nonlisted Topic",
-            "Topic :: Software Development :: Libraries",
-            "Topic :: Software Development :: Libraries :: Python Modules",
-        ]
-    )
+setuptools.setup()
